@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: exam-gateway
+  main:
+    web-application-type: reactive
+  cloud:
+    sentinel:
+      transport:
+        port: 8719 #跟控制台交流的端口,随意指定一个未使用的端口即可
+        dashboard: http://192.168.32.2:8858 # 指定控制台服务的地址
+      log:
+        dir: logs/sentinel #日志输出地址
+    nacos:
+      server-addr: 192.168.32.2:8848
+      config:
+        import-check:
+          enabled: false
+        group: DEFAULT_GROUP
+        #指定文件名，没有则默认${spring.application.name}
+        #指定读取配置中心文件后缀
+        file-extension: yml
+      discovery:    # 集群
+        cluster-name: getway-service    # 集群名称
+        ephemeral: false    #设置为非临时实例
+    gateway:
+      routes:
+        - id: roleService
+#          uri: lb://role-service
+          uri: http://localhost:8080
+          predicates:
+            - Path=/role/**
+          filters:
+            - StripPrefix=1
+        - id: paperService
+          # uri: lb://paper-service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/paper/**
+          filters:
+            - StripPrefix=1
+        - id: scoreService
+          # uri: lb://score-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/score/**
+          filters:
+            - StripPrefix=1

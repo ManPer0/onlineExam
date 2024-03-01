@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: score-service
+  cloud:
+    nacos:
+      server-addr: 192.168.32.2:8848
+      config:
+        import-check:
+          enabled: false
+        group: DEFAULT_GROUP
+        #指定文件名，没有则默认${spring.application.name}
+        #指定读取配置中心文件后缀
+        file-extension: yml
+      discovery:    # 集群
+        cluster-name: score-service    # 集群名称
+        ephemeral: false    #设置为非临时实例
+  session:
+    store-type: redis
+  redis:
+    host: 192.168.32.2
+    port: 6379
+    lettuce:
+      pool:
+        max-active: 10
+        max-idle: 5
+#  config:
+#    import: nacos:
+mybatis-plus:
+  configuration:
+    #在映射实体或者属性时，将数据库中表名和字段名中的下划线去掉，按照驼峰命名法映射
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: ASSIGN_ID
+

@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: role-service
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      server-addr: 192.168.32.2:8848
+      config:
+        file-extension: yaml

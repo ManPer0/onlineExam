@@ -1,0 +1,11 @@
+package com.yry.entity;
+
+import lombok.Data;
+import org.springframework.stereotype.Component;
+
+@Data
+@Component
+public class TransLogin {
+    private String username;
+    private String password;
+}
